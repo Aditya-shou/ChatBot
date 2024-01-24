@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
-import { ChakraProvider, Box, Input, Button, Flex, Center } from '@chakra-ui/react'; // Import Chakra UI components
+import { ChakraProvider, Box, Flex } from '@chakra-ui/react'; // Import Chakra UI components
 
 
 const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
@@ -37,8 +37,6 @@ export default function ChatGPT() {
 
   async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
     // Format messages for chatGPT API
-    // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
-    // So we need to reformat
 
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
@@ -52,12 +50,11 @@ export default function ChatGPT() {
 
 
     // Get the request body set up with the model we plan to use
-    // and the messages which we formatted above. We add a system message in the front to'
-    // determine how we want chatGPT to act. 
+    
     const apiRequestBody = {
       model: "gpt-3.5-turbo",
       messages: [
-        systemMessage,  // The system message DEFINES the logic of our chatGPT
+        systemMessage,  
         ...apiMessages // The messages from our chat with ChatGPT
       ]
     }
